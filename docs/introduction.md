@@ -7,8 +7,18 @@ Blockchain networks are stil in the infancy with network design. Theres still a 
 
 
 ## Plan
+
+
 1. Create cosmos chain
 2. Introduce branch for expermentation
 3. Add PoA module
 4. Introduce transaction routing module
 5. Introduce simulation
+
+## Cosmos chain structure
+
+## How / where modules work
+
+## writing our own module
+
+## PoA module

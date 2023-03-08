@@ -1,0 +1,12 @@
+syntax = "proto3";
+package onchainlayer.onchainlayer;
+
+import "gogoproto/gogo.proto";
+import "onchainlayer/onchainlayer/params.proto";
+
+option go_package = "onChainLayer/x/onchainlayer/types";
+
+// GenesisState defines the onchainlayer module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+}

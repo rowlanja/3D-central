@@ -1,0 +1,7 @@
+syntax = "proto3";
+package onchainlayer.onchainlayer;
+
+option go_package = "onChainLayer/x/onchainlayer/types";
+
+// Msg defines the Msg service.
+service Msg {}
