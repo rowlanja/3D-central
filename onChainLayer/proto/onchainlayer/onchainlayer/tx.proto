@@ -1,7 +1,46 @@
 syntax = "proto3";
+
 package onchainlayer.onchainlayer;
+
+import "onchainlayer/onchainlayer/registrand.proto";
 
 option go_package = "onChainLayer/x/onchainlayer/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  rpc CreateRegistrand (MsgCreateRegistrand) returns (MsgCreateRegistrandResponse);
+  rpc UpdateRegistrand (MsgUpdateRegistrand) returns (MsgUpdateRegistrandResponse);
+  rpc DeleteRegistrand (MsgDeleteRegistrand) returns (MsgDeleteRegistrandResponse);
+}
+message MsgCreateRegistrand {
+  string creator  = 1;
+  string ip       = 2;
+  string nickname = 3;
+  string sig      = 4;
+  string pk       = 5;
+  string msg      = 6;
+}
+
+message MsgCreateRegistrandResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateRegistrand {
+  string creator  = 1;
+  uint64 id       = 2;
+  string ip       = 3;
+  string nickname = 4;
+  string sig      = 5;
+  string pk       = 6;
+  string msg      = 7;
+}
+
+message MsgUpdateRegistrandResponse {}
+
+message MsgDeleteRegistrand {
+  string creator = 1;
+  uint64 id      = 2;
+}
+
+message MsgDeleteRegistrandResponse {}
+

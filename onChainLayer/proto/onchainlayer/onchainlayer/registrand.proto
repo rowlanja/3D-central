@@ -1,0 +1,14 @@
+syntax = "proto3";
+package onchainlayer.onchainlayer;
+
+option go_package = "onChainLayer/x/onchainlayer/types";
+
+message Registrand {
+  uint64 id = 1;
+  string ip = 2; 
+  string nickname = 3; 
+  string sig = 4; 
+  string pk = 5; 
+  string msg = 6; 
+  string creator = 7;
+}

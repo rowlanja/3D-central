@@ -1,26 +1,58 @@
 syntax = "proto3";
+
 package onchainlayer.onchainlayer;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "onchainlayer/onchainlayer/params.proto";
+import "onchainlayer/onchainlayer/registrand.proto";
 
 option go_package = "onChainLayer/x/onchainlayer/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/onChainLayer/onchainlayer/params";
+  
+  }
+  
+  // Queries a list of Registrand items.
+  rpc Registrand    (QueryGetRegistrandRequest) returns (QueryGetRegistrandResponse) {
+    option (google.api.http).get = "/onChainLayer/onchainlayer/registrand/{id}";
+  
+  }
+  rpc RegistrandAll (QueryAllRegistrandRequest) returns (QueryAllRegistrandResponse) {
+    option (google.api.http).get = "/onChainLayer/onchainlayer/registrand";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryGetRegistrandRequest {
+  uint64 id = 1;
+}
+
+message QueryGetRegistrandResponse {
+  Registrand Registrand = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllRegistrandRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllRegistrandResponse {
+  repeated Registrand                             Registrand = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
