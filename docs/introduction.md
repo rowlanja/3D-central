@@ -18,7 +18,12 @@ Blockchain networks are stil in the infancy with network design. Theres still a 
 ## Cosmos chain structure
 
 ## How / where modules work
+Cosmos chain is constructed from : 
+1. structures which are stored on the blockchain
+2. Modules which contain the business logic 
+3. 
 
 ## writing our own module
+For each module we start by defining the message which is the wrapper around input
 
 ## PoA module
