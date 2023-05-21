@@ -1,0 +1,12 @@
+syntax = "proto3";
+package onchainlayer.poa;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "onChainLayer/x/poa/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  
+}

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package onchainlayer.poa;
+
+import "gogoproto/gogo.proto";
+import "onchainlayer/poa/params.proto";
+
+option go_package = "onChainLayer/x/poa/types";
+
+// GenesisState defines the poa module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+}

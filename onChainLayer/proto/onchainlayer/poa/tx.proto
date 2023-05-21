@@ -1,0 +1,7 @@
+syntax = "proto3";
+package onchainlayer.poa;
+
+option go_package = "onChainLayer/x/poa/types";
+
+// Msg defines the Msg service.
+service Msg {}

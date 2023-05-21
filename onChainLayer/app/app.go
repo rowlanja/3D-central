@@ -106,6 +106,9 @@ import (
 	onchainlayermodule "onChainLayer/x/onchainlayer"
 	onchainlayermodulekeeper "onChainLayer/x/onchainlayer/keeper"
 	onchainlayermoduletypes "onChainLayer/x/onchainlayer/types"
+	poamodule "onChainLayer/x/poa"
+	poamodulekeeper "onChainLayer/x/poa/keeper"
+	poamoduletypes "onChainLayer/x/poa/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	appparams "onChainLayer/app/params"
@@ -165,6 +168,7 @@ var (
 		ica.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		onchainlayermodule.AppModuleBasic{},
+		poamodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
@@ -239,6 +243,8 @@ type App struct {
 	ScopedICAHostKeeper  capabilitykeeper.ScopedKeeper
 
 	OnchainlayerKeeper onchainlayermodulekeeper.Keeper
+
+	PoaKeeper poamodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager
@@ -284,6 +290,7 @@ func New(
 		ibctransfertypes.StoreKey, icahosttypes.StoreKey, capabilitytypes.StoreKey, group.StoreKey,
 		icacontrollertypes.StoreKey,
 		onchainlayermoduletypes.StoreKey,
+		poamoduletypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -503,6 +510,14 @@ func New(
 	)
 	onchainlayerModule := onchainlayermodule.NewAppModule(appCodec, app.OnchainlayerKeeper, app.AccountKeeper, app.BankKeeper)
 
+	app.PoaKeeper = *poamodulekeeper.NewKeeper(
+		appCodec,
+		keys[poamoduletypes.StoreKey],
+		keys[poamoduletypes.MemStoreKey],
+		app.GetSubspace(poamoduletypes.ModuleName),
+	)
+	poaModule := poamodule.NewAppModule(appCodec, app.PoaKeeper, app.AccountKeeper, app.BankKeeper)
+
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	/**** IBC Routing ****/
@@ -569,6 +584,7 @@ func New(
 		transferModule,
 		icaModule,
 		onchainlayerModule,
+		poaModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -599,6 +615,7 @@ func New(
 		paramstypes.ModuleName,
 		vestingtypes.ModuleName,
 		onchainlayermoduletypes.ModuleName,
+		poamoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -624,6 +641,7 @@ func New(
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
 		onchainlayermoduletypes.ModuleName,
+		poamoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -654,6 +672,7 @@ func New(
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
 		onchainlayermoduletypes.ModuleName,
+		poamoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 
@@ -684,6 +703,7 @@ func New(
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
 		onchainlayerModule,
+		poaModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 	app.sm.RegisterStoreDecoders()
@@ -889,6 +909,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(onchainlayermoduletypes.ModuleName)
+	paramsKeeper.Subspace(poamoduletypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper
